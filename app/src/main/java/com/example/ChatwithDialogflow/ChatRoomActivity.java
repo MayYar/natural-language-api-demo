@@ -1,7 +1,8 @@
-package com.example.chatinterface;
+package com.example.ChatwithDialogflow;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
@@ -11,11 +12,14 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.ChatwithDialogflow.Adapter.MessageAdapter;
+import com.example.ChatwithDialogflow.Model.Chat;
+
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -24,24 +28,37 @@ import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.ArrayList;
 
 public class ChatRoomActivity extends AppCompatActivity {
 
     private static final String TAG = "ChatRoomActivity";
     static final int CUSTOM_POST_REQUEST = 1;  // The request code
 
-    Button btn_input;
+    ImageButton btn_input;
     EditText ed_input;
     TextView response;
+
+    MessageAdapter messageAdapter;
+    ArrayList<Chat> mchat = new ArrayList<>();
+
+    RecyclerView recyclerView;
+    Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_room);
 
-        btn_input = (Button)findViewById(R.id.btn_input);
+        btn_input = (ImageButton)findViewById(R.id.btn_input);
         ed_input = (EditText) findViewById(R.id.ed_input);
         response = (TextView) findViewById(R.id.tv_response);
+
+        recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        recyclerView.setHasFixedSize(true);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
+        linearLayoutManager.setStackFromEnd(true);
+        recyclerView.setLayoutManager(linearLayoutManager);
 
         btn_input.setOnClickListener(doClick);
     }
@@ -51,19 +68,26 @@ public class ChatRoomActivity extends AppCompatActivity {
         public void onClick(View view) {
 
             //POST Request
-            promptInput();
+            sendMessage();
         }
     };
 
-    private void promptInput() {
+    private void sendMessage() {
 //        Intent intent = new Intent();
 //        intent.putExtra("test", CUSTOM_POST_REQUEST);
 
         try {
 //            startActivityForResult(intent, CUSTOM_POST_REQUEST);
             String userQuery = ed_input.getText().toString();
-            ed_input.setText(userQuery);
+            ed_input.setText("");
+
             Log.d(TAG, "User Query: " + userQuery);
+            mchat.add(new Chat("sender", userQuery));
+
+            messageAdapter = new MessageAdapter(ChatRoomActivity.this, mchat);
+
+            recyclerView.setAdapter(messageAdapter);
+
 
             RetrieveFeedTask task=new RetrieveFeedTask();
             task.execute(userQuery);
@@ -175,6 +199,10 @@ public class ChatRoomActivity extends AppCompatActivity {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             response.setText(s);
+            mchat.add(new Chat("receiver", s));
+            messageAdapter = new MessageAdapter(ChatRoomActivity.this, mchat);
+            recyclerView.setAdapter(messageAdapter);
         }
     }
+
 }

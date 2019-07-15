@@ -1,4 +1,4 @@
-package com.example.chatinterface;
+package com.example.ChatwithDialogflow;
 
 import androidx.appcompat.app.AppCompatActivity;
 
