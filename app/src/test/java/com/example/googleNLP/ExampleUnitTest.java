@@ -1,4 +1,4 @@
-package com.example.ChatwithDialogflow;
+package com.example.googleNLP;
 
 import org.junit.Test;
 

@@ -1,4 +1,4 @@
-package com.example.ChatwithDialogflow.Model;
+package com.example.googleNLP.Model;
 
 public class Chat {
 

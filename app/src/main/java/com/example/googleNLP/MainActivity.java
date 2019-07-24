@@ -1,4 +1,4 @@
-package com.example.ChatwithDialogflow;
+package com.example.googleNLP;
 
 import androidx.appcompat.app.AppCompatActivity;
 

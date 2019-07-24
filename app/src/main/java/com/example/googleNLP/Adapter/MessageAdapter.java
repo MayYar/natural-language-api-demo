@@ -1,4 +1,4 @@
-package com.example.ChatwithDialogflow.Adapter;
+package com.example.googleNLP.Adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,8 +9,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.ChatwithDialogflow.Model.Chat;
-import com.example.ChatwithDialogflow.R;
+import com.example.googleNLP.Model.Chat;
+import com.example.googleNLP.R;
 
 import java.util.ArrayList;
 
