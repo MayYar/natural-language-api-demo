@@ -45,7 +45,7 @@ import java.util.concurrent.ExecutionException;
 
 public class ChatRoomActivity extends AppCompatActivity {
 
-    private final String CLOUD_API_KEY = "AIzaSyDexGEae6RiUnIWN_krPgxBV7kjL4pSZ7g";
+    private final String CLOUD_API_KEY = "YOUR_API_KEY";
 
     private static final String TAG = "ChatRoomActivity";
     static final int CUSTOM_POST_REQUEST = 1;  // The request code
